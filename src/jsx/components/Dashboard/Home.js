@@ -17,7 +17,7 @@ const Home = () => {
   const [vocals, setVocals] = useState({});
   const getUser = async () => {
     await axios
-      .get(`http://api.thevocalhub.com/api/v1/users`)
+      .get(`https://api.thevocalhub.com/api/v1/users`)
       .then((res) => {
         setUsers(res.data.users);
       })
@@ -25,7 +25,7 @@ const Home = () => {
   };
   const getVocals = async () => {
     await axios
-      .get(`http://api.thevocalhub.com/api/v1/product`)
+      .get(`https://api.thevocalhub.com/api/v1/product`)
       .then((res) => {
         setVocals(res.data.products);
       })
