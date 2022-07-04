@@ -59,6 +59,7 @@ const SideBar = () => {
     Tags = ["tags", "add-tag"],
     Keys = ["keys", "add-key"],
     Testimonials = ["testimonials", "add-testimonials"],
+    ArtistRequest = ["artist-request"],
     bootstrap = [
       "ui-accordion",
       "ui-badge",
@@ -253,6 +254,12 @@ const SideBar = () => {
                 </Link>
               </li>
             </ul>
+          </li>
+          <li className={`${ArtistRequest.includes(path) ? "mm-active" : ""}`}>
+            <Link className="" to="/artist-request">
+              <i className="flaticon-087-stop"></i>
+              <span className="nav-text">Artist Requests</span>
+            </Link>
           </li>
           {/* <li className={`${bootstrap.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#">

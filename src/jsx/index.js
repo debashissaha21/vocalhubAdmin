@@ -90,6 +90,7 @@ import AddKeys from "./components/Keys/AddKey";
 import ListTestimonials from "./components/Testimonials/ListTestimonials";
 import AddTestimonial from "./components/Testimonials/addTestimonials";
 import EditTestimonial from "./components/Testimonials/editTestimonial";
+import ArtistRequest from "./components/ArtistRequest/ArtistRequest";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -119,7 +120,8 @@ const Markup = () => {
     { url: "testimonials", component: ListTestimonials },
     { url: "add-testimonials", component: AddTestimonial },
     { url: "edit-testimonial/:id", component: EditTestimonial },
-
+    ///Artist Request
+    { url: "artist-request", component: ArtistRequest },
     /// Bootstrap
     { url: "ui-alert", component: UiAlert },
     { url: "ui-badge", component: UiBadge },
