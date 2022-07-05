@@ -37,14 +37,18 @@ const AddVocal = () => {
   const [songDescription, setSongDescription] = React.useState("");
   const [tags, setTags] = React.useState([]);
   const [keys, setKeys] = React.useState([]);
+  const [ArtistId, setArtistId] = React.useState(0);
+  const [artistData, setArtistData] = React.useState([]);
   useEffect(() => {
     getSongSpecialization();
     getTags();
     getKeys();
+    getArtistData();
     return () => {
       setSongSpecialization([]);
       setTags([]);
       setKeys([]);
+      setArtistData([]);
     };
   }, []);
   const getSongSpecialization = async () => {
@@ -68,6 +72,14 @@ const AddVocal = () => {
       .get("https://api.thevocalhub.com/api/v1/keys")
       .then((res) => {
         setKeys(res.data.data);
+      })
+      .catch((err) => {});
+  };
+  const getArtistData = async () => {
+    await axios
+      .get(`https://api.thevocalhub.com/api/v1/users/group/2`)
+      .then((res) => {
+        setArtistData(res.data.users);
       })
       .catch((err) => {});
   };
@@ -139,6 +151,19 @@ const AddVocal = () => {
             className="form-file-input form-control"
             // required
           />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Artist</Form.Label>
+          <select
+            className="form-control form-control-lg"
+            onChange={(e) => setArtistId(parseInt(e.target.value))}
+          >
+            {artistData.map((item) => (
+              <option value={item.userId} key={item.userId}>
+                {item.userName}
+              </option>
+            ))}
+          </select>
         </Form.Group>
         <div className="input-group mb-3  input-info">
           <span className="input-group-text">£</span>

@@ -36,19 +36,25 @@ const EditTestimonial = () => {
       .catch((err) => {});
   };
   console.log(title);
-  const onSubmit = async (e) => {
+  console.log(image);
+  const onSubmit = async (e, imageData) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("image", image);
-    formData.append("reviews", reviews);
-    formData.append("title", title);
-    formData.append("Rating", rating);
-    formData.append("name", name);
+    // const formData = new FormData();
+    // formData.append("image", image);
+
+    // formData.append("reviews", reviews);
+    // formData.append("title", title);
+    // formData.append("Rating", rating);
+    // formData.append("name", name);
+    const formData = {
+      reviews: reviews,
+      title: title,
+      Rating: rating,
+      name: name,
+    };
 
     await axios
-      .put(`https://api.thevocalhub.com/api/v1/reviews/${id}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
+      .put(`https://api.thevocalhub.com/api/v1/reviews/${id}`, formData)
       .then((res) => {
         if (res.data.status === 200) {
           swal("Success", "Review Edited Successfully", "success");
@@ -62,7 +68,7 @@ const EditTestimonial = () => {
     <Fragment>
       <PageTitle activeMenu="Edit Review" motherMenu="Reviews" />
       {testimonial && (
-        <Form method="POST" onSubmit={onSubmit}>
+        <Form onSubmit={onSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Reviewer Name</Form.Label>
             <Form.Control
