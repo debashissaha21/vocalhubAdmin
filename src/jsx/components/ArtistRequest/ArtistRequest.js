@@ -127,7 +127,7 @@ const ArtistRequest = () => {
                               defaultChecked={isActive}
                               aria-labelledby="biscuit-label"
                               onChange={() =>
-                                handleStatus(6, d.artistId)
+                                handleStatus(d.userId, d.artistId)
                               }
                             />
                           </td>
