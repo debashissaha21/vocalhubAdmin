@@ -30,7 +30,8 @@ const AddVocal = () => {
     color: state.isFocused ? "blue" : "black",
   });
   const [songSpecialization, setSongSpecialization] = React.useState([]);
-  const [file, setFile] = React.useState(null);
+  const [songImage, setSongImage] = React.useState(null);
+  const [songSrc, setSongSrc] = React.useState(null);
   const [SongSpecializationId, setSongSpecializationId] = React.useState(0);
   const [SongName, setSongName] = React.useState("");
   const [songPrice, setSongPrice] = React.useState(0);
@@ -39,6 +40,10 @@ const AddVocal = () => {
   const [keys, setKeys] = React.useState([]);
   const [ArtistId, setArtistId] = React.useState(0);
   const [artistData, setArtistData] = React.useState([]);
+  const [tagsSelected, setTagsSelected] = React.useState(null);
+  const [keysSelected, setKeysSelected] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+
   useEffect(() => {
     getSongSpecialization();
     getTags();
@@ -87,7 +92,7 @@ const AddVocal = () => {
   tags &&
     tags.map((tag) => {
       tagData.push({
-        value: tag.tagId,
+        value: tag.tagName,
         label: tag.tagName,
       });
     });
@@ -95,33 +100,54 @@ const AddVocal = () => {
   keys &&
     keys.map((key) => {
       keysData.push({
-        value: key.keyId,
+        value: key.keyName,
         label: key.keyName,
       });
     });
+  const tagsData = [];
+  tagsSelected && tagsSelected.map((tag) => {
+    tagsData.push(tag.value);
+  });
+  const keysSelectedData = [];
+  keysSelected && keysSelected.map((key) => {
+    keysSelectedData.push(key.value);
+  });
+  console.log(tagsData);
+  console.log(keysSelectedData);
   const onSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    console.log(SongSpecializationId);
     const formData = new FormData();
-    formData.append("file", file);
-    formData.append("file", file);
-    formData.append("file", file);
+    formData.append("songImage", songImage);
+    formData.append("songSrc", songSrc);
+    formData.append("SongSpecializationId", SongSpecializationId);
+    formData.append("userId", ArtistId);
     formData.append("SongName", SongName);
     formData.append("songPrice", songPrice);
     formData.append("songDescription", songDescription);
+    formData.append("tags", tagsData);
+    formData.append("songKeys", keysSelectedData);
 
     await axios
       .post("https://api.thevocalhub.com/api/v1/product/", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {
+        console.log(res.data);
         if (res.data.status === 200) {
+          setIsLoading(false);
           swal("Success", "Vocal Added Successfully", "success");
         } else {
+          setIsLoading(false);
           swal("Oops", `${res.data.msg}`, "error");
         }
       })
       .catch((err) => {});
   };
+  if (isLoading) {
+    swal("Please Wait", "Vocal is being added", "info");
+  }
   return (
     <Fragment>
       <PageTitle activeMenu="Add Vocal" motherMenu="Vocals" />
@@ -132,7 +158,7 @@ const AddVocal = () => {
             type="text"
             placeholder="Enter vocal name"
             onChange={(e) => setSongName(e.target.value)}
-            // required
+            required
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -140,16 +166,17 @@ const AddVocal = () => {
           <Form.Control
             type="file"
             className="form-file-input form-control"
-            onChange={(e) => setFile(e.target.files[0])}
-            // required
+            onChange={(e) => setSongImage(e.target.files[0])}
+            required
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Vocal Src</Form.Label>
           <Form.Control
             type="file"
+            onChange={(e) => setSongSrc(e.target.files[0])}
             className="form-file-input form-control"
-            // required
+            required
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -160,7 +187,7 @@ const AddVocal = () => {
           >
             {artistData.map((item) => (
               <option value={item.userId} key={item.userId}>
-                {item.userName                                              }
+                {item.userName}
               </option>
             ))}
           </select>
@@ -172,7 +199,7 @@ const AddVocal = () => {
             type="number"
             className="form-control"
             onChange={(e) => setSongPrice(parseInt(e.target.value))}
-            // required
+            required
           />
 
           <span className="input-group-text">.00</span>
@@ -184,8 +211,10 @@ const AddVocal = () => {
               closeMenuOnSelect={false}
               components={{ ClearIndicator }}
               styles={{ clearIndicator: ClearIndicatorStyles }}
+              onChange={setTagsSelected}
               isMulti
               options={tagData}
+              required
             />
           </div>
         </Form.Group>
@@ -196,8 +225,10 @@ const AddVocal = () => {
               closeMenuOnSelect={false}
               components={{ ClearIndicator }}
               styles={{ clearIndicator: ClearIndicatorStyles }}
+              onChange={(e) => setKeysSelected(e)}
               options={keysData}
               isMulti
+              required
             />
           </div>
         </Form.Group>
@@ -208,18 +239,19 @@ const AddVocal = () => {
             rows="10"
             id="comment"
             onChange={(e) => setSongDescription(e.target.value)}
-            // required
+            required
           ></textarea>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Vocal Status (Optional)</Form.Label>
           <div id="multiselect">
             <select
-              defaultValue={4}
+              defaultValue={2}
               className="form-control form-control-lg"
               onChange={(e) =>
                 setSongSpecializationId(parseInt(e.target.value))
               }
+              required
             >
               {songSpecialization.map((item) => (
                 <option
