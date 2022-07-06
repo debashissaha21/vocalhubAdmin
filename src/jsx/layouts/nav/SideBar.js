@@ -60,6 +60,7 @@ const SideBar = () => {
     Keys = ["keys", "add-key"],
     Testimonials = ["testimonials", "add-testimonials"],
     ArtistRequest = ["artist-request"],
+    Artists = ["artists", "add-artist"],
     bootstrap = [
       "ui-accordion",
       "ui-badge",
@@ -159,6 +160,30 @@ const SideBar = () => {
               </li>
             </ul>
           </li>
+          <li className={`${Artists.includes(path) ? "mm-active" : ""}`}>
+            <Link className="has-arrow ai-icon" to="#">
+              <i className="flaticon-050-info"></i>
+              <span className="nav-text">Artists</span>
+            </Link>
+            <ul>
+              <li>
+                <Link
+                  className={`${path === "artists" ? "mm-active" : ""}`}
+                  to="/artists"
+                >
+                  List Artists
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className={`${path === "add-artist" ? "mm-active" : ""}`}
+                  to="/add-artist"
+                >
+                  Add Artist
+                </Link>
+              </li>
+            </ul>
+          </li>
           <li className={`${Vocals.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#">
               <i className="flaticon-041-graph"></i>
@@ -247,7 +272,9 @@ const SideBar = () => {
               </li>
               <li>
                 <Link
-                  className={`${path === "add-testimonials" ? "mm-active" : ""}`}
+                  className={`${
+                    path === "add-testimonials" ? "mm-active" : ""
+                  }`}
                   to="/add-testimonials"
                 >
                   Add Testimonials

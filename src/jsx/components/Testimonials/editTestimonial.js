@@ -26,7 +26,6 @@ const EditTestimonial = () => {
           setTestimonial(res.data.data);
           setName(res.data.data.name);
           setReviews(res.data.data.reviews);
-          setImage(res.data.data.image);
           setRating(res.data.data.Rating);
           setTitle(res.data.data.title);
         } else {
@@ -37,32 +36,55 @@ const EditTestimonial = () => {
   };
   console.log(title);
   console.log(image);
-  const onSubmit = async (e, imageData) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    // const formData = new FormData();
-    // formData.append("image", image);
+    let formData = {};
+    const imageData = new FormData();
+    if (image !== null) {
+      imageData.append("image", image);
+      imageData.append("reviews", reviews);
+      imageData.append("title", title);
+      imageData.append("Rating", rating);
+      imageData.append("name", name);
+    } else {
+      formData = {
+        reviews,
+        title,
+        rating,
+        name,
+      };
+    }
+    if (image != null) {
+      await axios
+        .put(`https://api.thevocalhub.com/api/v1/reviews/${id}`, imageData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
 
-    // formData.append("reviews", reviews);
-    // formData.append("title", title);
-    // formData.append("Rating", rating);
-    // formData.append("name", name);
-    const formData = {
-      reviews: reviews,
-      title: title,
-      Rating: rating,
-      name: name,
-    };
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.status === 200) {
+            swal("Success", "Review Edited Successfully", "success");
+          } else {
+            swal("Oops", `${res.data.msg}`, "error");
+          }
+        })
+        .catch((err) => {});
+    } else {
+      await axios
+        .put(`https://api.thevocalhub.com/api/v1/reviews/${id}`, formData, {})
 
-    await axios
-      .put(`https://api.thevocalhub.com/api/v1/reviews/${id}`, formData)
-      .then((res) => {
-        if (res.data.status === 200) {
-          swal("Success", "Review Edited Successfully", "success");
-        } else {
-          swal("Oops", `${res.data.msg}`, "error");
-        }
-      })
-      .catch((err) => {});
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.status === 200) {
+            swal("Success", "Review Edited Successfully", "success");
+          } else {
+            swal("Oops", `${res.data.msg}`, "error");
+          }
+        })
+        .catch((err) => {});
+    }
   };
   return (
     <Fragment>

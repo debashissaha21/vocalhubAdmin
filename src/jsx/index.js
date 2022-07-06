@@ -91,6 +91,7 @@ import ListTestimonials from "./components/Testimonials/ListTestimonials";
 import AddTestimonial from "./components/Testimonials/addTestimonials";
 import EditTestimonial from "./components/Testimonials/editTestimonial";
 import ArtistRequest from "./components/ArtistRequest/ArtistRequest";
+import ListArtists from "./components/Artists/ListArtist";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -122,6 +123,8 @@ const Markup = () => {
     { url: "edit-testimonial/:id", component: EditTestimonial },
     ///Artist Request
     { url: "artist-request", component: ArtistRequest },
+    ///Artists
+    { url: "artists", component: ListArtists },
     /// Bootstrap
     { url: "ui-alert", component: UiAlert },
     { url: "ui-badge", component: UiBadge },

@@ -6,7 +6,7 @@ import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import swal from "sweetalert";
 
-const ListUsers = () => {
+const ListArtists = () => {
   const [users, setUsers] = useState([]);
   useEffect(() => {
     getUsers();
@@ -16,7 +16,7 @@ const ListUsers = () => {
   }, []);
   const getUsers = async () => {
     await axios
-      .get("https://api.thevocalhub.com/api/v1/users")
+      .get("https://api.thevocalhub.com/api/v1/users/group/2")
       .then((res) => {
         setUsers(res.data.users);
       })
@@ -45,8 +45,6 @@ const ListUsers = () => {
     activePag.current * sort,
     (activePag.current + 1) * sort
   );
-
-  //const [demo, setdemo] = useState();
   const onClick = (i) => {
     activePag.current = i;
 
@@ -71,11 +69,11 @@ const ListUsers = () => {
   };
   return (
     <Fragment>
-      <PageTitle activeMenu="Users" motherMenu="Users" />
+      <PageTitle activeMenu="Artists" motherMenu="Artists" />
       <div className="col-12">
         <div className="card">
           <div className="card-header">
-            <h4 className="card-title">Users table</h4>
+            <h4 className="card-title">Artists table</h4>
           </div>
           <div className="card-body">
             <div className="w-100 table-responsive">
@@ -162,7 +160,7 @@ const ListUsers = () => {
                   >
                     <Link
                       className="paginate_button previous disabled"
-                      to="/users"
+                      to="/artists"
                       onClick={() =>
                         activePag.current > 0 && onClick(activePag.current - 1)
                       }
@@ -176,7 +174,7 @@ const ListUsers = () => {
                       {paggination.map((number, i) => (
                         <Link
                           key={i}
-                          to="/users"
+                          to="/artists"
                           className={`paginate_button  ${
                             activePag.current === i ? "current" : ""
                           } `}
@@ -188,7 +186,7 @@ const ListUsers = () => {
                     </span>
                     <Link
                       className="paginate_button next"
-                      to="/users"
+                      to="/artists"
                       onClick={() =>
                         activePag.current + 1 < paggination.length &&
                         onClick(activePag.current + 1)
@@ -210,4 +208,4 @@ const ListUsers = () => {
   );
 };
 
-export default ListUsers;
+export default ListArtists;
