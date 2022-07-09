@@ -10,25 +10,34 @@ const AddUsers = () => {
   const [regemailId, setUserEmail] = React.useState("");
   const [regPassword, setUserPassword] = React.useState("");
   const [confirmPassword, setUserConfirmPassword] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
   const onSubmit = (e) => {
     e.preventDefault();
-    const formData = {
+    let userData = {};
+    setIsLoading(true);
+    userData = {
       userName,
       regemailId,
       regPassword,
       confirmPassword,
+      groupId: 3
     };
-    console.log(formData);
+    if(isLoading){
+        swal("Please wait", "Your request is being processed", "info");
+    }
     axios
-      .post("https://api.thevocalhub.com/api/v1/users/", formData)
+      .post("https://api.thevocalhub.com/api/v1/users/", userData)
       .then((res) => {
         if (res.data.status === 200) {
+          setIsLoading(false);
           swal("Success", "User Added Successfully", "success");
         } else {
+          setIsLoading(false);
           swal("Oops", `${res.data.msg}`, "error");
         }
       })
       .catch((err) => {});
+     
   };
   return (
     <Fragment>
@@ -40,6 +49,7 @@ const AddUsers = () => {
             type="text"
             placeholder="Enter name"
             onChange={(e) => setUserName(e.target.value)}
+            required
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -48,6 +58,7 @@ const AddUsers = () => {
             type="email"
             placeholder="Enter email"
             onChange={(e) => setUserEmail(e.target.value)}
+            required
           />
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
@@ -60,6 +71,7 @@ const AddUsers = () => {
             type="password"
             placeholder="Password"
             onChange={(e) => setUserPassword(e.target.value)}
+            required
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -68,6 +80,7 @@ const AddUsers = () => {
             type="password"
             placeholder="Confirm Password"
             onChange={(e) => setUserConfirmPassword(e.target.value)}
+            required
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicCheckbox"></Form.Group>

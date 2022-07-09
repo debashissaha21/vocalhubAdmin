@@ -60,7 +60,7 @@ const SideBar = () => {
     Keys = ["keys", "add-key"],
     Testimonials = ["testimonials", "add-testimonials"],
     ArtistRequest = ["artist-request"],
-    Artists = ["artists", "add-artist"],
+    Artists = ["artists", "add-artist","edit-artist"],
     bootstrap = [
       "ui-accordion",
       "ui-badge",
@@ -180,6 +180,14 @@ const SideBar = () => {
                   to="/add-artist"
                 >
                   Add Artist
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className={`${path === "edit-artist" ? "mm-active" : ""}`}
+                  to="/edit-artist"
+                >
+                  Edit Artist
                 </Link>
               </li>
             </ul>

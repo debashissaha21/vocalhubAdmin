@@ -8,6 +8,7 @@ import swal from "sweetalert";
 
 const ListUsers = () => {
   const [users, setUsers] = useState([]);
+  const [isArtist, setIsArtist] = useState(null);
   useEffect(() => {
     getUsers();
     return () => {
@@ -69,6 +70,26 @@ const ListUsers = () => {
       })
       .catch((err) => {});
   };
+  const handleArtist = async (id, groupId) => {
+    console.log(groupId);
+    if (groupId === 3 || groupId === null) {
+      setIsArtist(2);
+    } else {
+      setIsArtist(3);
+    }
+    await axios
+      .put(`https://api.thevocalhub.com/api/v1/users/${id}`, {
+        groupId: isArtist,
+      })
+      .then((res) => {
+        if (res.data.status === 200) {
+          swal("Success", "User has been updated to Artist", "success");
+        } else {
+          swal("Error", `${res.data.msg}`, "error");
+        }
+      })
+      .catch((err) => {});
+  };
   return (
     <Fragment>
       <PageTitle activeMenu="Users" motherMenu="Users" />
@@ -88,6 +109,7 @@ const ListUsers = () => {
                       <th>Created At</th>
                       <th>Updated At</th>
                       <th>Active/Inactive</th>
+                      <th>User/Artist</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -110,6 +132,18 @@ const ListUsers = () => {
                                 onChange={() => handleStatus(d.userId)}
                               />
                             </td>
+                            <td>
+                              {/* {setIsArtist(d.groupId)} */}
+                              <Toggle
+                                id="biscuit-status"
+                                defaultChecked={d.groupId === 2}
+                                aria-labelledby="biscuit-label"
+                                onChange={() =>
+                                  handleArtist(d.userId, d.groupId)
+                                }
+                              />
+                            </td>
+
                             <td>
                               {
                                 <Fragment>

@@ -92,7 +92,7 @@ const ListArtists = () => {
                   <tbody>
                     {jobData.map((d, i) => (
                       <tr key={i}>
-                        {d.groupId === 1 ? (
+                        {(d.groupId === 3) | null ? (
                           <Fragment></Fragment>
                         ) : (
                           <Fragment key={i}>
@@ -113,7 +113,7 @@ const ListArtists = () => {
                                 <Fragment>
                                   <div className="d-flex">
                                     <Link
-                                      to={`/edit-user/${d.userId}`}
+                                      to={`/edit-artist/${d.userId}`}
                                       className="btn btn-primary shadow btn-xs sharp me-1"
                                     >
                                       <i className="fas fa-pen"></i>
