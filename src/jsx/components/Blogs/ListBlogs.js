@@ -4,29 +4,29 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import swal from "sweetalert";
 
-const ListKeys = () => {
-  const [keys, setkeys] = useState([]);
+const ListBlogs = () => {
+  const [blogs, setblogs] = useState([]);
   useEffect(() => {
-    getkeys();
+    getblogs();
     return () => {
-      setkeys([]);
+      setblogs([]);
     };
   }, []);
-  const getkeys = async () => {
+  const getblogs = async () => {
     await axios
-      .get("https://api.thevocalhub.com/api/v1/keys")
+      .get("https://api.thevocalhub.com/api/v1/blogs")
       .then((res) => {
-        setkeys(res.data.data);
+        setblogs(res.data.data);
       })
       .catch((err) => {});
   };
   const sort = 10;
-  let paggination = Array(Math.ceil(keys.length / sort))
+  let paggination = Array(Math.ceil(blogs.length / sort))
     .fill()
     .map((_, i) => i + 1);
 
   const activePag = useRef(0);
-  const jobData = keys.slice(
+  const jobData = blogs.slice(
     activePag.current * sort,
     (activePag.current + 1) * sort
   );
@@ -35,7 +35,7 @@ const ListKeys = () => {
   const onClick = (i) => {
     activePag.current = i;
 
-    jobData.current = keys.slice(
+    jobData.current = blogs.slice(
       activePag.current * sort,
       (activePag.current + 1) * sort
     );
@@ -43,11 +43,11 @@ const ListKeys = () => {
   const handleDelete = async (id) => {
     console.log("id", id);
     await axios
-      .delete(`https://api.thevocalhub.com/api/v1/keys/${id}`)
+      .delete(`https://api.thevocalhub.com/api/v1/blogs/${id}`)
       .then((res) => {
         if (res.data.status === 200) {
-          setkeys(keys.filter((key) => key.keyId !== id));
-          swal("Deleted!", "Key has been deleted.", "success");
+          setblogs(blogs.filter((key) => key.blogId !== id));
+          swal("Deleted!", "Blog has been deleted.", "success");
         } else {
           swal("Error!", `${res.data.msg}`, "error");
         }
@@ -56,11 +56,11 @@ const ListKeys = () => {
   };
   return (
     <Fragment>
-      <PageTitle activeMenu="keys" motherMenu="keys" />
+      <PageTitle activeMenu="blogs" motherMenu="blogs" />
       <div className="col-12">
         <div className="card">
           <div className="card-header">
-            <h4 className="card-title">keys table</h4>
+            <h4 className="card-title">blogs table</h4>
           </div>
           <div className="card-body">
             <div className="w-100 table-responsive">
@@ -68,9 +68,10 @@ const ListKeys = () => {
                 <table id="example" className="display w-100 dataTable">
                   <thead>
                     <tr role="row">
-                      <th>Name</th>
-                      <th>Created At</th>
-                      <th>Updated At</th>
+                      <th>Featured Image</th>
+                      <th>Post Image</th>
+                      <th>Title</th>
+                      <th>Description</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -81,18 +82,41 @@ const ListKeys = () => {
                           <Fragment></Fragment>
                         ) : (
                           <Fragment key={i}>
-                            <td>{<Fragment>{d.keyName}</Fragment>}</td>
-                            <td>{<Fragment>{d.createdAt}</Fragment>}</td>
-                            <td>{<Fragment>{d.updatedAt}</Fragment>}</td>
+                            <td>
+                              {
+                                <Fragment>
+                                  <img
+                                    src={`https://api.thevocalhub.com/uploads/${d.ficharImage}`}
+                                    className="rounded-circle"
+                                    width={80}
+                                    height={80}
+                                  />
+                                </Fragment>
+                              }
+                            </td>
+                            <td>{<Fragment> <img
+                                    src={`https://api.thevocalhub.com/uploads/${d.enarImage}`}
+                                    className="rounded-circle"
+                                    width={80}
+                                    height={80}
+                                  /></Fragment>}</td>
+                            <td>{<Fragment>{d.title}</Fragment>}</td>
+                            <td>{<Fragment>{d.description.slice(0,100)}...</Fragment>}</td>
 
                             <td>
                               {
                                 <Fragment>
                                   <div className="d-flex">
+                                  <Link
+                                    to={`/edit-blog/${d.blogId}`}
+                                    className="btn btn-primary shadow btn-xs sharp me-1"
+                                  >
+                                    <i className="fas fa-pen"></i>
+                                  </Link>
                                     <Link
                                       to="#"
                                       className="btn btn-danger shadow btn-xs sharp"
-                                      onClick={() => handleDelete(d.keyId)}
+                                      onClick={() => handleDelete(d.blogId)}
                                     >
                                       <i className="fa fa-trash"></i>
                                     </Link>
@@ -107,9 +131,10 @@ const ListKeys = () => {
                   </tbody>
                   <tfoot>
                     <tr role="row">
-                      <th>Name</th>
-                      <th>Created At</th>
-                      <th>Updated At</th>
+                    <th>Featured Image</th>
+                      <th>Post Image</th>
+                      <th>Title</th>
+                      <th>Description</th>
                       <th>Actions</th>
                     </tr>
                   </tfoot>
@@ -118,10 +143,10 @@ const ListKeys = () => {
                 <div className="d-sm-flex text-center justify-content-between align-items-center mt-3">
                   <div className="dataTables_info">
                     Showing {activePag.current * sort + 1} to{" "}
-                    {keys.length > (activePag.current + 1) * sort
+                    {blogs.length > (activePag.current + 1) * sort
                       ? (activePag.current + 1) * sort
-                      : keys.length}{" "}
-                    of {keys.length} entries
+                      : blogs.length}{" "}
+                    of {blogs.length} entries
                   </div>
                   <div
                     className="dataTables_paginate paging_simple_numbers"
@@ -129,7 +154,7 @@ const ListKeys = () => {
                   >
                     <Link
                       className="paginate_button previous disabled"
-                      to="/keys"
+                      to="/blogs"
                       onClick={() =>
                         activePag.current > 0 && onClick(activePag.current - 1)
                       }
@@ -143,7 +168,7 @@ const ListKeys = () => {
                       {paggination.map((number, i) => (
                         <Link
                           key={i}
-                          to="/keys"
+                          to="/blogs"
                           className={`paginate_button  ${
                             activePag.current === i ? "current" : ""
                           } `}
@@ -155,7 +180,7 @@ const ListKeys = () => {
                     </span>
                     <Link
                       className="paginate_button next"
-                      to="/keys"
+                      to="/blogs"
                       onClick={() =>
                         activePag.current + 1 < paggination.length &&
                         onClick(activePag.current + 1)
@@ -177,4 +202,4 @@ const ListKeys = () => {
   );
 };
 
-export default ListKeys;
+export default ListBlogs;

@@ -1,5 +1,4 @@
 import { useContext, useEffect } from 'react';
-import "react-calendar/dist/Calendar.css";
 
 
 const DashboardDark = () => {

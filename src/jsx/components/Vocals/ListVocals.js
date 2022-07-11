@@ -96,7 +96,7 @@ const ListVocals = () => {
                         <Fragment key={i}>
                           <td>
                             <img
-                              src={d.songImage}
+                              src={`https://api.thevocalhub.com/uploads/${d.songImage}`}
                               alt=""
                               className="rounded-circle"
                               width="80"

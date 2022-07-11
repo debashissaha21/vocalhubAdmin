@@ -1,6 +1,4 @@
 import { useState, useContext, useEffect } from "react";
-import loadable from "@loadable/component";
-import pMinDelay from "p-min-delay";
 import axios from "axios";
 
 //Import
