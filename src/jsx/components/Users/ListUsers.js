@@ -72,14 +72,14 @@ const ListUsers = () => {
   };
   const handleArtist = async (id, groupId) => {
     console.log(groupId);
-    if (groupId === 3 || groupId === null) {
+    if (groupId === 3) {
       setIsArtist(2);
     } else {
       setIsArtist(3);
     }
     await axios
       .put(`https://api.thevocalhub.com/api/v1/users/${id}`, {
-        groupId: isArtist,
+        groupId: 2,
       })
       .then((res) => {
         if (res.data.status === 200) {
@@ -104,6 +104,7 @@ const ListUsers = () => {
                 <table id="example" className="display w-100 dataTable">
                   <thead>
                     <tr role="row">
+                      <th>UserImage</th>
                       <th>Name</th>
                       <th>EmailId</th>
                       <th>Created At</th>
@@ -116,10 +117,37 @@ const ListUsers = () => {
                   <tbody>
                     {jobData.map((d, i) => (
                       <tr key={i}>
-                        {d.groupId === 1 ? (
+                        {d.groupId === 1 || d.groupId === 2 ? (
                           <Fragment></Fragment>
                         ) : (
                           <Fragment key={i}>
+                            <td>
+                              {d.image != null ? (
+                                <Fragment>
+                                  {
+                                    <img
+                                      src={`https://api.thevocalhub.com/uploads/${d.image}`}
+                                      width={60}
+                                      height={60}
+                                      className="rounded-circle"
+                                    />
+                                  }
+                                </Fragment>
+                              ) : (
+                                <Fragment>
+                                  {
+                                    <img
+                                      src={
+                                        "https://icon-library.com/images/no-user-image-icon/no-user-image-icon-0.jpg"
+                                      }
+                                      width={60}
+                                      height={60}
+                                      className="rounded-circle"
+                                    />
+                                  }
+                                </Fragment>
+                              )}
+                            </td>
                             <td>{<Fragment>{d.userName}</Fragment>}</td>
                             <td>{<Fragment>{d.regemailId}</Fragment>}</td>
                             <td>{<Fragment>{d.createdAt}</Fragment>}</td>
@@ -172,6 +200,7 @@ const ListUsers = () => {
                   </tbody>
                   <tfoot>
                     <tr role="row">
+                      <th>UserImage</th>
                       <th>Name</th>
                       <th>EmailId</th>
                       <th>Created At</th>

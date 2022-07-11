@@ -126,6 +126,7 @@ const AddVocal = () => {
     formData.append("SongName", SongName);
     formData.append("songPrice", songPrice);
     formData.append("songDescription", songDescription);
+    formData.append("artistId", ArtistId);
     formData.append("tags", tagsData);
     formData.append("songKeys", keysSelectedData);
 

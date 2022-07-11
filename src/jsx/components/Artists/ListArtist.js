@@ -81,8 +81,18 @@ const ListArtists = () => {
                 <table id="example" className="display w-100 dataTable">
                   <thead>
                     <tr role="row">
+                      <th>Artist Image</th>
                       <th>Name</th>
                       <th>EmailId</th>
+                      <th>Gender</th>
+                      <th>Rating</th>
+                      <th>Country</th>
+                      <th>Achievment</th>
+                      <th>Specialist</th>
+                      <th>Music Note</th>
+                      <th>Hire Message</th>
+                      <th>Hire Price</th>
+                      <th>About</th>
                       <th>Created At</th>
                       <th>Updated At</th>
                       <th>Active/Inactive</th>
@@ -96,8 +106,50 @@ const ListArtists = () => {
                           <Fragment></Fragment>
                         ) : (
                           <Fragment key={i}>
+                            <td>
+                              {d.image != null ? (
+                                <Fragment>
+                                  {
+                                    <img
+                                      src={`https://api.thevocalhub.com/uploads/${d.image}`}
+                                      width={60}
+                                      height={60}
+                                      className="rounded-circle"
+                                    />
+                                  }
+                                </Fragment>
+                              ) : (
+                                <Fragment>
+                                  {
+                                    <img
+                                      src={
+                                        "https://icon-library.com/images/no-user-image-icon/no-user-image-icon-0.jpg"
+                                      }
+                                      width={60}
+                                      height={60}
+                                      className="rounded-circle"
+                                    />
+                                  }
+                                </Fragment>
+                              )}
+                            </td>
                             <td>{<Fragment>{d.userName}</Fragment>}</td>
                             <td>{<Fragment>{d.regemailId}</Fragment>}</td>
+                            <td>{<Fragment>{d.gender}</Fragment>}</td>
+                            <td>{<Fragment>{d.rating}</Fragment>}</td>
+                            <td>{<Fragment>{d.country}</Fragment>}</td>
+                            <td>{<Fragment>{d.achievement}</Fragment>}</td>
+                            <td>{<Fragment>{d.specialist}</Fragment>}</td>
+                            <td>{<Fragment>{d.musicNote}</Fragment>}</td>
+                            <td>{<Fragment>{d.hireMsg}</Fragment>}</td>
+                            <td>{<Fragment>{d.hirePrice}</Fragment>}</td>
+                            <td>
+                              {
+                                <Fragment>
+                                  {d.about && d.about.slice(0,50)}....
+                                </Fragment>
+                              }
+                            </td>
                             <td>{<Fragment>{d.createdAt}</Fragment>}</td>
                             <td>{<Fragment>{d.updatedAt}</Fragment>}</td>
                             <td>
@@ -136,8 +188,18 @@ const ListArtists = () => {
                   </tbody>
                   <tfoot>
                     <tr role="row">
+                      <th>Artist Image</th>
                       <th>Name</th>
                       <th>EmailId</th>
+                      <th>Gender</th>
+                      <th>Rating</th>
+                      <th>Country</th>
+                      <th>Achievment</th>
+                      <th>Specialist</th>
+                      <th>Music Note</th>
+                      <th>Hire Message</th>
+                      <th>Hire Price</th>
+                      <th>About</th>
                       <th>Created At</th>
                       <th>Updated At</th>
                       <th>Active/Inactive</th>

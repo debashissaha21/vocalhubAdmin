@@ -4,8 +4,8 @@ import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 import swal from "sweetalert";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { useParams } from "react-router-dom";
 
 const EditBlog = () => {
@@ -103,13 +103,11 @@ const EditBlog = () => {
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Post description</Form.Label>
-          <CKEditor
-            editor={ClassicEditor}
-            data={description}
-            onChange={(e, editor) => {
-              const data = editor.getData();
-              setDescription(data);
-            }}
+          <ReactQuill
+            theme="snow"
+            value={description}
+            onChange={setDescription}
+            style={{ minHeight: "300px" }}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">

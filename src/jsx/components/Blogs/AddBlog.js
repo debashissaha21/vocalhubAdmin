@@ -1,11 +1,11 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import PageTitle from "../../layouts/PageTitle";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 import swal from "sweetalert";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const AddBlog = () => {
   const [title, setTitle] = React.useState("");
@@ -13,7 +13,7 @@ const AddBlog = () => {
   const [featuredImage, setFeaturedImage] = React.useState("");
   const [image, setImage] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
-
+  console.log(description);
   const onSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -57,12 +57,11 @@ const AddBlog = () => {
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Post description</Form.Label>
-          <CKEditor
-            editor={ClassicEditor}
-            onChange={(e, editor) => {
-              const data = editor.getData();
-              setDescription(data);
-            }}
+          <ReactQuill
+            theme="snow"
+            value={description}
+            onChange={setDescription}
+            style={{ minHeight: "300px" }}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
