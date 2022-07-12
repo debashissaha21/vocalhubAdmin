@@ -61,7 +61,8 @@ const SideBar = () => {
     Testimonials = ["testimonials", "add-testimonials"],
     ArtistRequest = ["artist-request"],
     Artists = ["artists", "add-artist", "edit-artist"],
-    Blogs = ["blogs", "add-blog", "edit-blog"];
+    Blogs = ["blogs", "add-blog", "edit-blog"],
+    AffiliateRequest = ["affiliate-requests"];
 
   return (
     <div
@@ -257,6 +258,14 @@ const SideBar = () => {
             <Link className="" to="/artist-request">
               <i className="flaticon-087-stop"></i>
               <span className="nav-text">Artist Requests</span>
+            </Link>
+          </li>
+          <li
+            className={`${AffiliateRequest.includes(path) ? "mm-active" : ""}`}
+          >
+            <Link className="" to="/affiliate-requests">
+              <i className="flaticon-087-stop"></i>
+              <span className="nav-text">Affiliate Requests</span>
             </Link>
           </li>
         </MM>

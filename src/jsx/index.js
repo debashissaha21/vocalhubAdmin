@@ -39,6 +39,7 @@ import EditArtist from "./components/Artists/EditArtist";
 import ListBlogs from "./components/Blogs/ListBlogs";
 import AddBlog from "./components/Blogs/AddBlog";
 import EditBlog from "./components/Blogs/EditBlog";
+import AffiliateRequest from "./components/AffiliateRequest/AffiliateRequest";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -78,6 +79,8 @@ const Markup = () => {
     { url: "blogs", component: ListBlogs },
     { url: "add-blog", component: AddBlog },
     { url: "edit-blog/:id", component: EditBlog },
+    ///Affiliate
+    { url: "affiliate-requests", component: AffiliateRequest },
 
     { url: "page-login", component: Login },
   ];
