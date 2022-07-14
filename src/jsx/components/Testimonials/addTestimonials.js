@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import PageTitle from "../../layouts/PageTitle";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
@@ -11,6 +11,14 @@ const AddTestimonial = () => {
   const [reviews, setReviews] = React.useState("");
   const [rating, setRating] = React.useState(0);
   const [title, setTitle] = React.useState("");
+  const [artistData, setArtistData] = React.useState([]);
+  const [userId, setUserId] = React.useState();
+  useEffect(() => {
+    getArtistData();
+    return () => {
+      setArtistData([]);
+    };
+  }, []);
   const onSubmit = async (e) => {
     e.preventDefault();
     console.log(image);
@@ -20,6 +28,7 @@ const AddTestimonial = () => {
     formData.append("title", title);
     formData.append("Rating", rating);
     formData.append("name", name);
+    formData.append("userId", userId);
 
     await axios
       .post("https://api.thevocalhub.com/api/v1/reviews/", formData, {
@@ -31,6 +40,14 @@ const AddTestimonial = () => {
         } else {
           swal("Oops", `${res.data.msg}`, "error");
         }
+      })
+      .catch((err) => {});
+  };
+  const getArtistData = async () => {
+    await axios
+      .get(`https://api.thevocalhub.com/api/v1/users/group/2`)
+      .then((res) => {
+        setArtistData(res.data.data);
       })
       .catch((err) => {});
   };
@@ -79,6 +96,19 @@ const AddTestimonial = () => {
             onChange={(e) => setRating(e.target.value)}
             required
           />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Artist (optional)</Form.Label>
+          <select
+            className="form-control form-control-lg"
+            onChange={(e) => setUserId(e.target.value)}
+          >
+            <option value="">Select Artist</option>
+            {artistData &&
+              artistData.map((artist) => {
+                return <option value={artist.userId}>{artist.userName}</option>;
+              })}
+          </select>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Button variant="primary" type="submit">

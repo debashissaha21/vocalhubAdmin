@@ -20,7 +20,7 @@ const ListVocals = () => {
 
   const getProducts = async () => {
     await axios
-      .get("https://api.thevocalhub.com/api/v1/product")
+      .get("https://api.thevocalhub.com/api/v1/product?include=all")
       .then((res) => {
         setVocals(res.data.products);
       })
@@ -127,16 +127,16 @@ const ListVocals = () => {
                                 </Badge>
                               }
                             </td>
-                            <td>{<Fragment>{d.songArtistName}</Fragment>}</td>
+                            <td>{<Fragment>{d.users && d.users.userName}</Fragment>}</td>
                             <td>
                               <img
-                                src={d.songArtistImage}
+                                src={`https://api.thevocalhub.com/uploads/${d.users && d.users.image}`}
                                 alt=""
                                 className="rounded-circle"
                                 width="80"
                               />
                             </td>
-                            <td>{d.songArtistRating}</td>
+                            <td>{d.users && d.users.rating} Stars</td>
                             <td>
                               {" "}
                               {
