@@ -105,13 +105,15 @@ const AddVocal = () => {
       });
     });
   const tagsData = [];
-  tagsSelected && tagsSelected.map((tag) => {
-    tagsData.push(tag.value);
-  });
+  tagsSelected &&
+    tagsSelected.map((tag) => {
+      tagsData.push(tag.value);
+    });
   const keysSelectedData = [];
-  keysSelected && keysSelected.map((key) => {
-    keysSelectedData.push(key.value);
-  });
+  keysSelected &&
+    keysSelected.map((key) => {
+      keysSelectedData.push(key.value);
+    });
   console.log(tagsData);
   console.log(keysSelectedData);
   const onSubmit = async (e) => {
@@ -187,7 +189,10 @@ const AddVocal = () => {
             onChange={(e) => setUserId(e.target.value)}
           >
             <option value="">Select Artist</option>
-            <option value={7}>Page</option>
+            {artistData &&
+              artistData.map((artist) => {
+                return <option value={artist.userId}>{artist.userName}</option>;
+              })}
           </select>
         </Form.Group>
         <div className="input-group mb-3  input-info">
