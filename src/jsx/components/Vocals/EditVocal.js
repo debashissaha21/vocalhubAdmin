@@ -92,7 +92,7 @@ const EditVocal = () => {
     console.log(SongName);
     console.log(songPrice)
     await axios
-      .put(`http://api.thevocalhub.com/api/v1/product/${id}`, formData)
+      .put(`https://api.thevocalhub.com/api/v1/product/${id}`, formData)
       .then((res) => {
         if (res.data.status === 200) {
           swal("Success", "Vocal Updated Successfully", "success");
