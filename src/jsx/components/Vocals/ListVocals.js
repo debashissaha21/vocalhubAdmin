@@ -36,22 +36,22 @@ const ListVocals = () => {
       .catch((err) => {});
   };
   const sort = 5;
-  let paggination = Array(Math.ceil(vocals.length / sort))
-    .fill()
-    .map((_, i) => i + 1);
+  let paggination =
+    vocals &&
+    Array(Math.ceil(vocals.length / sort))
+      .fill()
+      .map((_, i) => i + 1);
 
   const activePag = useRef(0);
-  const jobData = vocals.slice(
-    activePag.current * sort,
-    (activePag.current + 1) * sort
-  );
+  const jobData =
+    vocals &&
+    vocals.slice(activePag.current * sort, (activePag.current + 1) * sort);
   const onClick = (i) => {
     activePag.current = i;
 
-    jobData.current = vocals.slice(
-      activePag.current * sort,
-      (activePag.current + 1) * sort
-    );
+    jobData.current =
+      vocals &&
+      vocals.slice(activePag.current * sort, (activePag.current + 1) * sort);
   };
   const handleDelete = (id) => {
     axios
@@ -91,99 +91,103 @@ const ListVocals = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {jobData.map((d, i) => (
-                      <tr>
-                        <Fragment key={i}>
-                          <td>
-                            <img
-                              src={`https://api.thevocalhub.com/uploads/${d.songImage}`}
-                              alt=""
-                              className="rounded-circle"
-                              width="80"
-                            />
-                          </td>
-                          <td>{<Fragment>{d.SongName}</Fragment>}</td>
-                          <td>
-                            {
-                              <Fragment>
-                                {d.songDescription.slice(0, 50)}
-                              </Fragment>
-                            }
-                          </td>
-                          <td>
-                            {
-                              <Fragment>
-                                <Badge variant="success light">
-                                  ${d.songPrice}
+                    {jobData &&
+                      jobData.map((d, i) => (
+                        <tr>
+                          <Fragment key={i}>
+                            <td>
+                              <img
+                                src={`https://api.thevocalhub.com/uploads/${d.songImage}`}
+                                alt=""
+                                className="rounded-circle"
+                                width="80"
+                              />
+                            </td>
+                            <td>{<Fragment>{d.SongName}</Fragment>}</td>
+                            <td>
+                              {
+                                <Fragment>
+                                  {d.songDescription.slice(0, 50)}
+                                </Fragment>
+                              }
+                            </td>
+                            <td>
+                              {
+                                <Fragment>
+                                  <Badge variant="success light">
+                                    ${d.songPrice}
+                                  </Badge>
+                                </Fragment>
+                              }
+                            </td>
+                            <td>
+                              {
+                                <Badge variant="danger badge-lg light">
+                                  {d.tags}
                                 </Badge>
-                              </Fragment>
-                            }
-                          </td>
-                          <td>
-                            {
-                              <Badge variant="danger badge-lg light">
-                                {d.tags}
-                              </Badge>
-                            }
-                          </td>
-                          <td>{<Fragment>{d.songArtistName}</Fragment>}</td>
-                          <td>
-                            <img
-                              src={d.songArtistImage}
-                              alt=""
-                              className="rounded-circle"
-                              width="80"
-                            />
-                          </td>
-                          <td>{d.songArtistRating}</td>
-                          <td> {
-                              <Badge variant="warning badge-lg light">
-                                {d.songKeys}
-                              </Badge>
-                            }</td>
-                          {d.SongSpecializationId === 1 ? (
-                            <td>
-                              <Badge variant="danger badge-lg light">
-                                Main Hit
-                              </Badge>
+                              }
                             </td>
-                          ) : d.SongSpecializationId === 2 ? (
+                            <td>{<Fragment>{d.songArtistName}</Fragment>}</td>
                             <td>
-                              <Badge variant="warning badge-lg light">
-                                Week Top
-                              </Badge>
+                              <img
+                                src={d.songArtistImage}
+                                alt=""
+                                className="rounded-circle"
+                                width="80"
+                              />
                             </td>
-                          ) : (
+                            <td>{d.songArtistRating}</td>
                             <td>
-                              <Badge variant="primary badge-lg light">
-                                New Hit
-                              </Badge>
+                              {" "}
+                              {
+                                <Badge variant="warning badge-lg light">
+                                  {d.songKeys}
+                                </Badge>
+                              }
                             </td>
-                          )}
-                          <td>
-                            {
-                              <Fragment>
-                                <div className="d-flex">
-                                  <Link
-                                    to={`/edit-vocal/${d.productId}`}
-                                    className="btn btn-primary shadow btn-xs sharp me-1"
-                                  >
-                                    <i className="fas fa-pen"></i>
-                                  </Link>
-                                  <Link
-                                    to="#"
-                                    className="btn btn-danger shadow btn-xs sharp"
-                                    onClick={() => handleDelete(d.productId)}
-                                  >
-                                    <i className="fa fa-trash"></i>
-                                  </Link>
-                                </div>
-                              </Fragment>
-                            }
-                          </td>
-                        </Fragment>
-                      </tr>
-                    ))}
+                            {d.SongSpecializationId === 1 ? (
+                              <td>
+                                <Badge variant="danger badge-lg light">
+                                  Main Hit
+                                </Badge>
+                              </td>
+                            ) : d.SongSpecializationId === 2 ? (
+                              <td>
+                                <Badge variant="warning badge-lg light">
+                                  Week Top
+                                </Badge>
+                              </td>
+                            ) : (
+                              <td>
+                                <Badge variant="primary badge-lg light">
+                                  New Hit
+                                </Badge>
+                              </td>
+                            )}
+                            <td>
+                              {
+                                <Fragment>
+                                  <div className="d-flex">
+                                    <Link
+                                      to={`/edit-vocal/${d.productId}`}
+                                      className="btn btn-primary shadow btn-xs sharp me-1"
+                                    >
+                                      <i className="fas fa-pen"></i>
+                                    </Link>
+                                    <Link
+                                      to="#"
+                                      className="btn btn-danger shadow btn-xs sharp"
+                                      onClick={() => handleDelete(d.productId)}
+                                    >
+                                      <i className="fa fa-trash"></i>
+                                    </Link>
+                                  </div>
+                                </Fragment>
+                              }
+                            </td>
+                          </Fragment>
+                        </tr>
+                      ))}
                   </tbody>
                   <tfoot>
                     <tr role="row">
@@ -205,10 +209,10 @@ const ListVocals = () => {
                 <div className="d-sm-flex text-center justify-content-between align-items-center mt-3">
                   <div className="dataTables_info">
                     Showing {activePag.current * sort + 1} to{" "}
-                    {vocals.length > (activePag.current + 1) * sort
+                    {vocals && vocals.length > (activePag.current + 1) * sort
                       ? (activePag.current + 1) * sort
-                      : vocals.length}{" "}
-                    of {vocals.length} entries
+                      : vocals && vocals.length}{" "}
+                    of {vocals && vocals.length} entries
                   </div>
                   <div
                     className="dataTables_paginate paging_simple_numbers"
@@ -227,18 +231,19 @@ const ListVocals = () => {
                       ></i>
                     </Link>
                     <span>
-                      {paggination.map((number, i) => (
-                        <Link
-                          key={i}
-                          to="/vocals"
-                          className={`paginate_button  ${
-                            activePag.current === i ? "current" : ""
-                          } `}
-                          onClick={() => onClick(i)}
-                        >
-                          {number}
-                        </Link>
-                      ))}
+                      {paggination &&
+                        paggination.map((number, i) => (
+                          <Link
+                            key={i}
+                            to="/vocals"
+                            className={`paginate_button  ${
+                              activePag.current === i ? "current" : ""
+                            } `}
+                            onClick={() => onClick(i)}
+                          >
+                            {number}
+                          </Link>
+                        ))}
                     </span>
                     <Link
                       className="paginate_button next"

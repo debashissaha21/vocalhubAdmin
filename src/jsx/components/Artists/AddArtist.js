@@ -27,22 +27,22 @@ const AddArtist = () => {
     setIsLoading(true);
     console.log(userImage);
     const formData = new FormData();
-    formData.append("userName", userName);
-    formData.append("regemailId", regemailId);
-    formData.append("regPassword", regPassword);
-    formData.append("confirmPassword", confirmPassword);
-    formData.append("image", userImage);
-    formData.append("gender", gender);
-    formData.append("rating", parseInt(rating));
-    formData.append("country", country);
-    formData.append("achievement", achievment);
-    formData.append("specialist", specialist);
-    formData.append("musicNote", musicNotes);
-    formData.append("hireMsg", hireMessage);
-    formData.append("hirePrice", hirePrice);
-    formData.append("about", about);
-    formData.append("groupId", 2);
     if (userImage !== null) {
+      formData.append("userName", userName);
+      formData.append("regemailId", regemailId);
+      formData.append("regPassword", regPassword);
+      formData.append("confirmPassword", confirmPassword);
+      formData.append("image", userImage);
+      formData.append("gender", gender);
+      formData.append("rating", parseInt(rating));
+      formData.append("country", country);
+      formData.append("achievement", achievment);
+      formData.append("specialist", specialist);
+      formData.append("musicNote", musicNotes);
+      formData.append("hireMsg", hireMessage);
+      formData.append("hirePrice", hirePrice);
+      formData.append("about", about);
+      formData.append("groupId", 2);
     } else {
       userData = {
         userName,
@@ -58,7 +58,7 @@ const AddArtist = () => {
         hireMsg: hireMessage,
         hirePrice: hirePrice,
         about: about,
-        groupId: 2
+        groupId: 2,
       };
     }
     if (isLoading) {
@@ -72,6 +72,7 @@ const AddArtist = () => {
           },
         })
         .then((res) => {
+          console.log(res.data);
           if (res.data.status === 200) {
             setIsLoading(false);
             swal("Success", "Artist Added Successfully", "success");

@@ -34,11 +34,11 @@ const AddVocal = () => {
   const [songSrc, setSongSrc] = React.useState(null);
   const [SongSpecializationId, setSongSpecializationId] = React.useState(0);
   const [SongName, setSongName] = React.useState("");
-  const [songPrice, setSongPrice] = React.useState(0);
+  const [songPrice, setSongPrice] = React.useState();
   const [songDescription, setSongDescription] = React.useState("");
   const [tags, setTags] = React.useState([]);
   const [keys, setKeys] = React.useState([]);
-  const [ArtistId, setArtistId] = React.useState(0);
+  const [userId, setUserId] = React.useState();
   const [artistData, setArtistData] = React.useState([]);
   const [tagsSelected, setTagsSelected] = React.useState(null);
   const [keysSelected, setKeysSelected] = React.useState(null);
@@ -84,7 +84,7 @@ const AddVocal = () => {
     await axios
       .get(`https://api.thevocalhub.com/api/v1/users/group/2`)
       .then((res) => {
-        setArtistData(res.data.users);
+        setArtistData(res.data.data);
       })
       .catch((err) => {});
   };
@@ -117,16 +117,16 @@ const AddVocal = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log(SongSpecializationId);
+    console.log(userId);
+    // console.log(SongSpecializationId);
     const formData = new FormData();
     formData.append("songImage", songImage);
     formData.append("songSrc", songSrc);
     formData.append("SongSpecializationId", SongSpecializationId);
-    formData.append("userId", ArtistId);
+    formData.append("userId", userId);
     formData.append("SongName", SongName);
     formData.append("songPrice", songPrice);
     formData.append("songDescription", songDescription);
-    formData.append("artistId", ArtistId);
     formData.append("tags", tagsData);
     formData.append("songKeys", keysSelectedData);
 
@@ -184,13 +184,10 @@ const AddVocal = () => {
           <Form.Label>Artist</Form.Label>
           <select
             className="form-control form-control-lg"
-            onChange={(e) => setArtistId(parseInt(e.target.value))}
+            onChange={(e) => setUserId(e.target.value)}
           >
-            {artistData.map((item) => (
-              <option value={item.userId} key={item.userId}>
-                {item.userName}
-              </option>
-            ))}
+            <option value="">Select Artist</option>
+            <option value={7}>Page</option>
           </select>
         </Form.Group>
         <div className="input-group mb-3  input-info">
