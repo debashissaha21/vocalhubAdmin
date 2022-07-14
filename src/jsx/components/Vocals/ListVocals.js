@@ -157,10 +157,16 @@ const ListVocals = () => {
                                   Week Top
                                 </Badge>
                               </td>
-                            ) : (
+                            ) : d.SongSpecializationId === 3 ? (
                               <td>
                                 <Badge variant="primary badge-lg light">
                                   New Hit
+                                </Badge>
+                              </td>
+                            ) : (
+                              <td>
+                                <Badge variant="info badge-lg light">
+                                  Regular
                                 </Badge>
                               </td>
                             )}
