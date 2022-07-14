@@ -28,7 +28,9 @@ const AddTestimonial = () => {
     formData.append("title", title);
     formData.append("Rating", rating);
     formData.append("name", name);
-    formData.append("userId", userId);
+    if (userId != null) {
+      formData.append("userId", userId);
+    }
 
     await axios
       .post("https://api.thevocalhub.com/api/v1/reviews/", formData, {
