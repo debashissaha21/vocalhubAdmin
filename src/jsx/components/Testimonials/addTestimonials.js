@@ -36,6 +36,7 @@ const AddTestimonial = () => {
       })
       .then((res) => {
         if (res.data.status === 200) {
+          console.log(res.data);
           swal("Success", "Review Added Successfully", "success");
         } else {
           swal("Oops", `${res.data.msg}`, "error");
