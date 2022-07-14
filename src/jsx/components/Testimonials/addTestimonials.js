@@ -12,7 +12,7 @@ const AddTestimonial = () => {
   const [rating, setRating] = React.useState(0);
   const [title, setTitle] = React.useState("");
   const [artistData, setArtistData] = React.useState([]);
-  const [userId, setUserId] = React.useState();
+  const [userId, setUserId] = React.useState(null);
   useEffect(() => {
     getArtistData();
     return () => {
