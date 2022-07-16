@@ -256,6 +256,7 @@ const AddVocal = () => {
               }
               required
             >
+              <option value="3">Select Vocal Status</option>
               {songSpecialization.map((item) => (
                 <option
                   value={item.SongSpecializationId}

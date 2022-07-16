@@ -191,6 +191,7 @@ const EditVocal = () => {
                 setSongSpecializationId(parseInt(e.target.value))
               }
             >
+              <option value="3">Select Status</option>
               {songSpecialization.map((item) => (
                 <option
                   value={item.SongSpecializationId}
