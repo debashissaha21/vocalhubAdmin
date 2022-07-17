@@ -45,7 +45,7 @@ const ListUsers = () => {
     }
     await axios
       .put(`https://api.thevocalhub.com/api/v1/users/${id}`, {
-        affiliateStatus: affiliateStatus,
+        AffiliateStatus: affiliateStatus,
       })
       .then((res) => {
         if (res.data.status === 200) {
