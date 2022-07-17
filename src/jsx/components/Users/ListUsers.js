@@ -9,7 +9,7 @@ import swal from "sweetalert";
 const ListUsers = () => {
   const [users, setUsers] = useState([]);
   const [isArtist, setIsArtist] = useState(null);
-  const [affiliateStatus, setAffiliateStatus] = useState(true);
+  const [affiliateStatus, setAffiliateStatus] = useState(1);
   useEffect(() => {
     getUsers();
     return () => {
@@ -39,9 +39,9 @@ const ListUsers = () => {
   };
   const handleAffiliate = async (id, affiliateStatus) => {
     if (affiliateStatus) {
-      setAffiliateStatus(false);
+      setAffiliateStatus(0);
     } else {
-      setAffiliateStatus(true);
+      setAffiliateStatus(1);
     }
     await axios
       .put(`https://api.thevocalhub.com/api/v1/users/${id}`, {
