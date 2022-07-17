@@ -9,6 +9,7 @@ import swal from "sweetalert";
 const ListUsers = () => {
   const [users, setUsers] = useState([]);
   const [isArtist, setIsArtist] = useState(null);
+  const [affiliateStatus, setAffiliateStatus] = useState(true);
   useEffect(() => {
     getUsers();
     return () => {
@@ -26,6 +27,26 @@ const ListUsers = () => {
   const handleStatus = async (id) => {
     await axios
       .delete(`https://api.thevocalhub.com/api/v1/users/${id}`)
+      .then((res) => {
+        if (res.data.status === 200) {
+          swal("Success", "User has been updated", "success");
+          getUsers();
+        } else {
+          swal("Error", "Something went wrong", "error");
+        }
+      })
+      .catch((err) => {});
+  };
+  const handleAffiliate = async (id, affiliateStatus) => {
+    if (affiliateStatus) {
+      setAffiliateStatus(false);
+    } else {
+      setAffiliateStatus(true);
+    }
+    await axios
+      .put(`https://api.thevocalhub.com/api/v1/users/${id}`, {
+        affiliateStatus: affiliateStatus,
+      })
       .then((res) => {
         if (res.data.status === 200) {
           swal("Success", "User has been updated", "success");
@@ -107,6 +128,7 @@ const ListUsers = () => {
                       <th>UserImage</th>
                       <th>Name</th>
                       <th>EmailId</th>
+                      <th>Affiliate Status</th>
                       <th>Created At</th>
                       <th>Updated At</th>
                       <th>Active/Inactive</th>
@@ -150,6 +172,18 @@ const ListUsers = () => {
                             </td>
                             <td>{<Fragment>{d.userName}</Fragment>}</td>
                             <td>{<Fragment>{d.regemailId}</Fragment>}</td>
+                            <td>
+                              <Toggle
+                                id="biscuit-status"
+                                defaultChecked={
+                                  d.affiliateStatus === true ? true : false
+                                }
+                                aria-labelledby="biscuit-label"
+                                onChange={() =>
+                                  handleAffiliate(d.userId, d.affiliateStatus)
+                                }
+                              />
+                            </td>
                             <td>{<Fragment>{d.createdAt}</Fragment>}</td>
                             <td>{<Fragment>{d.updatedAt}</Fragment>}</td>
                             <td>
@@ -166,9 +200,7 @@ const ListUsers = () => {
                                 id="biscuit-status"
                                 defaultChecked={d.groupId === 2}
                                 aria-labelledby="biscuit-label"
-                                onChange={() =>
-                                  handleArtist(d.userId, d.groupId)
-                                }
+                                onChange={() => handleArtist(d.userId)}
                               />
                             </td>
 
