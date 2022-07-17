@@ -41,6 +41,7 @@ import AddBlog from "./components/Blogs/AddBlog";
 import EditBlog from "./components/Blogs/EditBlog";
 import AffiliateRequest from "./components/AffiliateRequest/AffiliateRequest";
 import ContactUs from "./components/ContactUs/ContactUs";
+import ListOrders from "./components/Orders/ListOrders";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -84,6 +85,8 @@ const Markup = () => {
     { url: "affiliate-requests", component: AffiliateRequest },
     ///Contact US
     { url: "contact-us", component: ContactUs },
+    /// Orders
+    { url: "orders", component: ListOrders },
 
     { url: "page-login", component: Login },
   ];

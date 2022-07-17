@@ -9,7 +9,6 @@ import swal from "sweetalert";
 const ListUsers = () => {
   const [users, setUsers] = useState([]);
   const [isArtist, setIsArtist] = useState(null);
-  const [affiliateStatus, setAffiliateStatus] = useState(1);
   useEffect(() => {
     getUsers();
     return () => {
@@ -38,14 +37,9 @@ const ListUsers = () => {
       .catch((err) => {});
   };
   const handleAffiliate = async (id, affiliateStatus) => {
-    if (affiliateStatus) {
-      setAffiliateStatus(0);
-    } else {
-      setAffiliateStatus(1);
-    }
     await axios
       .put(`https://api.thevocalhub.com/api/v1/users/${id}`, {
-        AffiliateStatus: affiliateStatus,
+        affiliateStatus: affiliateStatus ? 0 : 1,
       })
       .then((res) => {
         if (res.data.status === 200) {
@@ -93,14 +87,9 @@ const ListUsers = () => {
   };
   const handleArtist = async (id, groupId) => {
     console.log(groupId);
-    if (groupId === 3) {
-      setIsArtist(2);
-    } else {
-      setIsArtist(3);
-    }
     await axios
       .put(`https://api.thevocalhub.com/api/v1/users/${id}`, {
-        groupId: 2,
+        groupId: groupId == 3 ? 2 : 3,
       })
       .then((res) => {
         if (res.data.status === 200) {
@@ -200,7 +189,9 @@ const ListUsers = () => {
                                 id="biscuit-status"
                                 defaultChecked={d.groupId === 2}
                                 aria-labelledby="biscuit-label"
-                                onChange={() => handleArtist(d.userId)}
+                                onChange={() =>
+                                  handleArtist(d.userId, d.groupId)
+                                }
                               />
                             </td>
 

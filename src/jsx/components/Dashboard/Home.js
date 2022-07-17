@@ -37,7 +37,7 @@ const Home = () => {
     await axios
       .get(`https://api.thevocalhub.com/api/v1/users/group/2`)
       .then((res) => {
-        setArtists(res.data.users);
+        setArtists(res.data.data);
       })
       .catch((err) => {});
   };
@@ -143,6 +143,53 @@ const Home = () => {
                 <path d="M15.67,22a2,2,0,0,0,1.92-2.56A7.8,7.8,0,0,0,10,14a7.8,7.8,0,0,0-7.59,5.44A2,2,0,0,0,4.34,22Z"></path>
                 <line x1="19" y1="8" x2="19" y2="14"></line>
                 <line x1="22" y1="11" x2="16" y2="11"></line>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div className="col-xl-3 col-sm-6">
+          <div className="card gradient-6 card-bx">
+            <div className="card-body d-flex align-items-center">
+              <div className="me-auto text-white">
+                <h2 className="text-white">
+                  {artistRequests && artistRequests.length}
+                </h2>
+                <span className="fs-18">Total Orders</span>
+              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="58"
+                height="58"
+                fill="none"
+                stroke="#fff"
+                stroke-width="1"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                &lt;!--! Atomicons Free 1.00 by @atisalab License -
+                https://atomicons.com/license/ (Icons: CC BY 4.0) Copyright 2021
+                Atomicons --&gt;
+                <path
+                  d="M2,3H4.23a1,1,0,0,1,1,.74L8.1,14.52A2,2,0,0,0,10,16h6.53a2,2,0,0,0,1.9-1.37l2.1-6.31A1,1,0,0,0,19.61,7H6.1"
+                  stroke-linecap="round"
+                ></path>
+                <line
+                  x1="9.99"
+                  y1="20"
+                  x2="10.01"
+                  y2="20"
+                  stroke-linecap="round"
+                  stroke-width="2"
+                ></line>
+                <line
+                  x1="15.99"
+                  y1="20"
+                  x2="16.01"
+                  y2="20"
+                  stroke-linecap="round"
+                  stroke-width="2"
+                ></line>
               </svg>
             </div>
           </div>

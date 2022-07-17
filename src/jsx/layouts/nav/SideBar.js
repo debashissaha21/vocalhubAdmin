@@ -63,7 +63,8 @@ const SideBar = () => {
     Artists = ["artists", "add-artist", "edit-artist"],
     Blogs = ["blogs", "add-blog", "edit-blog"],
     AffiliateRequest = ["affiliate-requests"],
-    ContactUs = ["contact-us"];
+    ContactUs = ["contact-us"],
+    Orders = ["orders"];
 
   return (
     <div
@@ -180,6 +181,14 @@ const SideBar = () => {
                 </Link>
               </li>
             </ul>
+          </li>
+          <li
+            className={`${Orders.includes(path) ? "mm-active" : ""}`}
+          >
+            <Link className="" to="/orders">
+              <i className="flaticon-087-stop"></i>
+              <span className="nav-text">Orders</span>
+            </Link>
           </li>
           <li className={`${Keys.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#">
