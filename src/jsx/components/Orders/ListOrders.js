@@ -8,8 +8,6 @@ import swal from "sweetalert";
 
 const ListOrders = () => {
   const [orders, setorders] = useState([]);
-  const [isArtist, setIsArtist] = useState(null);
-  const [affiliateStatus, setAffiliateStatus] = useState(1);
   useEffect(() => {
     getorders();
     return () => {
@@ -18,9 +16,9 @@ const ListOrders = () => {
   }, []);
   const getorders = async () => {
     await axios
-      .get("https://api.thevocalhub.com/api/v1/orders")
+      .get("http://api.thevocalhub.com/api/v1/orders/getAllUsersOrder")
       .then((res) => {
-        setorders(res.data.orders);
+        setorders(res.data.data);
       })
       .catch((err) => {});
   };
@@ -46,39 +44,19 @@ const ListOrders = () => {
     );
   };
   const handleDelete = async (id) => {
-    console.log("id", id);
     await axios
-      .delete(`https://api.thevocalhub.com/api/v1/orders/delete/${id}`)
+      .delete(`https://api.thevocalhub.com/api/v1/orders/deleteOrder/${id}`)
       .then((res) => {
         if (res.data.status === 200) {
-          setorders(orders.filter((user) => user.userId !== id));
-          swal("Deleted!", "User has been deleted.", "success");
+          setorders(orders.filter((user) => user.orderId !== id));
+          swal("Deleted!", "Order has been deleted.", "success");
         } else {
           swal("Error!", `${res.data.msg}`, "error");
         }
       })
       .catch((err) => {});
   };
-  const handleArtist = async (id, groupId) => {
-    console.log(groupId);
-    if (groupId === 3) {
-      setIsArtist(2);
-    } else {
-      setIsArtist(3);
-    }
-    await axios
-      .put(`https://api.thevocalhub.com/api/v1/orders/${id}`, {
-        groupId: 2,
-      })
-      .then((res) => {
-        if (res.data.status === 200) {
-          swal("Success", "User has been updated to Artist", "success");
-        } else {
-          swal("Error", `${res.data.msg}`, "error");
-        }
-      })
-      .catch((err) => {});
-  };
+  
   return (
     <Fragment>
       <PageTitle activeMenu="orders" motherMenu="orders" />
@@ -108,54 +86,24 @@ const ListOrders = () => {
                   <tbody>
                     {jobData.map((d, i) => (
                       <tr key={i}>
-                        <td>{<Fragment>{d.userName}</Fragment>}</td>
-                        <td>{<Fragment>{d.regemailId}</Fragment>}</td>
-                        <td>
-                          <Toggle
-                            id="biscuit-status"
-                            defaultChecked={
-                              d.affiliateStatus === true ? true : false
-                            }
-                            aria-labelledby="biscuit-label"
-                            onChange={() =>
-                              handleAffiliate(d.userId, d.affiliateStatus)
-                            }
-                          />
-                        </td>
-                        <td>{<Fragment>{d.createdAt}</Fragment>}</td>
-                        <td>{<Fragment>{d.updatedAt}</Fragment>}</td>
-                        <td>
-                          <Toggle
-                            id="biscuit-status"
-                            defaultChecked={d.isActive}
-                            aria-labelledby="biscuit-label"
-                            onChange={() => handleStatus(d.userId)}
-                          />
-                        </td>
-                        <td>
-                          {/* {setIsArtist(d.groupId)} */}
-                          <Toggle
-                            id="biscuit-status"
-                            defaultChecked={d.groupId === 2}
-                            aria-labelledby="biscuit-label"
-                            onChange={() => handleArtist(d.userId)}
-                          />
-                        </td>
+                        <td>{<Fragment>{d.users.userName}</Fragment>}</td>
+                        <td>{<Fragment>{d.users.regemailId}</Fragment>}</td>
+                        <td>{<Fragment>{d.transactionId}</Fragment>}</td>
+                        <td>{<Fragment>{d.payerId}</Fragment>}</td>
+                        <td>{<Fragment>£{d.totalPrice}</Fragment>}</td>
+                        <td>{<Fragment>£{d.payableAmount}</Fragment>}</td>
+                        <td>{<Fragment>{d.couponName}</Fragment>}</td>
+                        <td>{<Fragment>{d.createdAt.split("T")}</Fragment>}</td>
+                        <td>{<Fragment>{d.updatedAt.split("T")}</Fragment>}</td>
 
                         <td>
                           {
                             <Fragment>
                               <div className="d-flex">
                                 <Link
-                                  to={`/edit-user/${d.userId}`}
-                                  className="btn btn-primary shadow btn-xs sharp me-1"
-                                >
-                                  <i className="fas fa-pen"></i>
-                                </Link>
-                                <Link
                                   to="#"
                                   className="btn btn-danger shadow btn-xs sharp"
-                                  onClick={() => handleDelete(d.userId)}
+                                  onClick={() => handleDelete(d.orderId)}
                                 >
                                   <i className="fa fa-trash"></i>
                                 </Link>
