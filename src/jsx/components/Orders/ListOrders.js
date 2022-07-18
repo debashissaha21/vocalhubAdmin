@@ -16,7 +16,7 @@ const ListOrders = () => {
   }, []);
   const getorders = async () => {
     await axios
-      .get("http://api.thevocalhub.com/api/v1/orders/getAllUsersOrder")
+      .get("https://api.thevocalhub.com/api/v1/orders/getAllUsersOrder")
       .then((res) => {
         setorders(res.data.data);
       })
