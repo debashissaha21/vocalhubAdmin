@@ -42,6 +42,7 @@ import EditBlog from "./components/Blogs/EditBlog";
 import AffiliateRequest from "./components/AffiliateRequest/AffiliateRequest";
 import ContactUs from "./components/ContactUs/ContactUs";
 import ListOrders from "./components/Orders/ListOrders";
+import Profile from "./components/Profile/Profile";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -89,6 +90,7 @@ const Markup = () => {
     { url: "orders", component: ListOrders },
 
     { url: "page-login", component: Login },
+    { url: "profile", component: Profile },
   ];
   let path = window.location.pathname;
   path = path.split("/");

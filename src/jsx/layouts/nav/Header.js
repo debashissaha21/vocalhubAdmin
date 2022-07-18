@@ -73,7 +73,7 @@ const Header = ({ onNote }) => {
                   align="right"
                   className="mt-3 dropdown-menu dropdown-menu-end"
                 >
-                  <Link to="/app-profile" className="dropdown-item ai-icon">
+                  <Link to="/profile" className="dropdown-item ai-icon">
                     <svg
                       id="icon-user1"
                       xmlns="http://www.w3.org/2000/svg"

@@ -11,12 +11,14 @@ const Home = () => {
     getVocals();
     getArtists();
     getArtistRequest();
+    getAllOrders();
     changeBackground({ value: "light", label: "Light" });
   }, []);
   const [users, setUsers] = useState({});
   const [vocals, setVocals] = useState({});
   const [artists, setArtists] = useState({});
   const [artistRequests, setArtistRequests] = useState({});
+  const [orders, setOrders] = useState({});
   const getUser = async () => {
     await axios
       .get(`https://api.thevocalhub.com/api/v1/users`)
@@ -49,6 +51,14 @@ const Home = () => {
       })
       .catch((err) => {});
   };
+  const getAllOrders = async () => {
+    await axios
+      .get(`https://api.thevocalhub.com/api/v1/orders/getAllUsersOrder`)
+      .then((res) => {
+        setOrders(res.data.data);
+      })
+      .catch((err) => {});
+  }
 
   return (
     <>
@@ -152,7 +162,7 @@ const Home = () => {
             <div className="card-body d-flex align-items-center">
               <div className="me-auto text-white">
                 <h2 className="text-white">
-                  {artistRequests && artistRequests.length}
+                  {orders && orders.length}
                 </h2>
                 <span className="fs-18">Total Orders</span>
               </div>
