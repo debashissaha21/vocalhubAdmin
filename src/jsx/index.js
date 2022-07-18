@@ -43,6 +43,8 @@ import AffiliateRequest from "./components/AffiliateRequest/AffiliateRequest";
 import ContactUs from "./components/ContactUs/ContactUs";
 import ListOrders from "./components/Orders/ListOrders";
 import Profile from "./components/Profile/Profile";
+import ListCoupons from "./components/Coupons/ListCoupons";
+import AddCoupon from "./components/Coupons/AddCoupon";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -88,6 +90,9 @@ const Markup = () => {
     { url: "contact-us", component: ContactUs },
     /// Orders
     { url: "orders", component: ListOrders },
+    /// Coupons
+    { url: "coupons", component: ListCoupons },
+    { url: "add-coupon", component: AddCoupon },
 
     { url: "page-login", component: Login },
     { url: "profile", component: Profile },

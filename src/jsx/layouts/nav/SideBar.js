@@ -64,7 +64,8 @@ const SideBar = () => {
     Blogs = ["blogs", "add-blog", "edit-blog"],
     AffiliateRequest = ["affiliate-requests"],
     ContactUs = ["contact-us"],
-    Orders = ["orders"];
+    Orders = ["orders"],
+    Coupons = ["coupons","add-coupon"];
 
   return (
     <div
@@ -154,6 +155,30 @@ const SideBar = () => {
                   to="/add-blog"
                 >
                   Add Blog
+                </Link>
+              </li>
+            </ul>
+          </li>
+          <li className={`${Coupons.includes(path) ? "mm-active" : ""}`}>
+            <Link className="has-arrow ai-icon" to="#">
+              <i className="flaticon-050-info"></i>
+              <span className="nav-text">Coupons</span>
+            </Link>
+            <ul>
+              <li>
+                <Link
+                  className={`${path === "blogs" ? "mm-active" : ""}`}
+                  to="/coupons"
+                >
+                  List Coupons
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className={`${path === "add-blog" ? "mm-active" : ""}`}
+                  to="/add-coupon"
+                >
+                  Add Coupon
                 </Link>
               </li>
             </ul>
