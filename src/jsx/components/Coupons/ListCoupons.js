@@ -16,22 +16,9 @@ const ListCoupons = () => {
   }, []);
   const getcoupons = async () => {
     await axios
-      .get("https://api.thevocalhub.com/api/v1/coupons")
+      .get("https://api.thevocalhub.com/api/v1/coupon")
       .then((res) => {
-        setcoupons(res.data.coupons);
-      })
-      .catch((err) => {});
-  };
-  const handleStatus = async (id) => {
-    await axios
-      .delete(`https://api.thevocalhub.com/api/v1/coupons/${id}`)
-      .then((res) => {
-        if (res.data.status === 200) {
-          swal("Success", "User has been updated", "success");
-          getcoupons();
-        } else {
-          swal("Error", "Something went wrong", "error");
-        }
+        setcoupons(res.data.data);
       })
       .catch((err) => {});
   };
@@ -59,13 +46,28 @@ const ListCoupons = () => {
   const handleDelete = async (id) => {
     console.log("id", id);
     await axios
-      .delete(`https://api.thevocalhub.com/api/v1/coupons/delete/${id}`)
+      .delete(`https://api.thevocalhub.com/api/v1/coupon/${id}`)
       .then((res) => {
         if (res.data.status === 200) {
-          setcoupons(coupons.filter((user) => user.userId !== id));
+          setcoupons(coupons.filter((user) => user.couponId !== id));
           swal("Deleted!", "Coupon has been deleted.", "success");
         } else {
           swal("Error!", `${res.data.msg}`, "error");
+        }
+      })
+      .catch((err) => {});
+  };
+  const handleStatus = async (id, subscribeCoupon) => {
+    await axios
+      .put(`https://api.thevocalhub.com/api/v1/coupon/${id}`, {
+        subscribeCoupon: subscribeCoupon ? 0 : 1,
+      })
+      .then((res) => {
+        if (res.data.status === 200) {
+          swal("Success", "Coupon has been updated", "success");
+          getcoupons();
+        } else {
+          swal("Error", "Something went wrong", "error");
         }
       })
       .catch((err) => {});
@@ -87,7 +89,8 @@ const ListCoupons = () => {
                     <tr role="row">
                       <th>Name</th>
                       <th>Code</th>
-                      <th>Active/Inactive</th>
+                      <th>Discount</th>
+                      <th>Subscribe Coupon</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -95,13 +98,17 @@ const ListCoupons = () => {
                     {jobData.map((d, i) => (
                       <tr key={i}>
                         <Fragment key={i}>
-                          <td>{<Fragment>{d.userName}</Fragment>}</td>
+                          <td>{<Fragment>{d.couponName}</Fragment>}</td>
                           <td>{<Fragment>{d.code}</Fragment>}</td>
+                          <td>{<Fragment>{d.discount}%</Fragment>}</td>
                           <td>
                             <Toggle
                               id="biscuit-status"
                               defaultChecked={
-                                d.affiliateStatus === true ? true : false
+                                d.subscribeCoupon === true ? true : false
+                              }
+                              onChange={() =>
+                                handleStatus(d.couponId, d.subscribeCoupon)
                               }
                               aria-labelledby="biscuit-label"
                             />
@@ -114,7 +121,7 @@ const ListCoupons = () => {
                                   <Link
                                     to="#"
                                     className="btn btn-danger shadow btn-xs sharp"
-                                    onClick={() => handleDelete(d.userId)}
+                                    onClick={() => handleDelete(d.couponId)}
                                   >
                                     <i className="fa fa-trash"></i>
                                   </Link>
@@ -130,7 +137,8 @@ const ListCoupons = () => {
                     <tr role="row">
                       <th>Name</th>
                       <th>Code</th>
-                      <th>Active/Inactive</th>
+                      <th>Discount</th>
+                      <th>subscribe Coupon</th>
                       <th>Actions</th>
                     </tr>
                   </tfoot>

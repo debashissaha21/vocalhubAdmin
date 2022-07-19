@@ -11,10 +11,11 @@ const AddCoupon = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     const formData = {
-      keyName,
+      couponName,
+      discount,
     };
     axios
-      .post("https://api.thevocalhub.com/api/v1/keys/", formData)
+      .post("https://api.thevocalhub.com/api/v1/coupon/", formData)
       .then((res) => {
         if (res.data.status === 200) {
           swal("Success", " Added Successfully", "success");
