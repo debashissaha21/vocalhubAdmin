@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Badge } from "react-bootstrap";
 import axios from "axios";
 import swal from "sweetalert";
+import Toggle from "react-toggle";
 
 const ListVocals = () => {
   const [vocals, setVocals] = useState([]);
@@ -66,6 +67,35 @@ const ListVocals = () => {
       })
       .catch((err) => {});
   };
+  const handleFeatured = (id, isFeatured) => {
+    axios
+      .put(`https://api.thevocalhub.com/api/v1/product/${id}`, {
+        isFeatured: isFeatured ? 0 : 1,
+      })
+      .then((res) => {
+        if (res.data.status === 200) {
+          swal("Featured!", "Your vocal has been changed.", "success");
+        } else {
+          swal("Error!", `${res.data.msg}`, "error");
+        }
+      })
+      .catch((err) => {});
+  };
+  const handleNew = (id, isNew) => {
+    axios
+      .put(`https://api.thevocalhub.com/api/v1/product/${id}`, {
+        isNew: isNew ? 0 : 1,
+      })
+      .then((res) => {
+        if (res.data.status === 200) {
+          swal("New!", "Your vocal has been changed.", "success");
+        } else {
+          swal("Error!", `${res.data.msg}`, "error");
+        }
+      })
+      .catch((err) => {});
+  };
+
   return (
     <Fragment>
       <PageTitle activeMenu="Vocals" motherMenu="Vocals" />
@@ -86,6 +116,8 @@ const ListVocals = () => {
                       <th>Artist Image</th>
                       <th>Artist Rating</th>
                       <th>Vocal Keys</th>
+                      <th>IsFeatured</th>
+                      <th>IsNew</th>
                       <th>Vocal Status</th>
                       <th>Actions</th>
                     </tr>
@@ -127,10 +159,18 @@ const ListVocals = () => {
                                 </Badge>
                               }
                             </td>
-                            <td>{<Fragment>{d.users && d.users.userName}</Fragment>}</td>
+                            <td>
+                              {
+                                <Fragment>
+                                  {d.users && d.users.userName}
+                                </Fragment>
+                              }
+                            </td>
                             <td>
                               <img
-                                src={`https://api.thevocalhub.com/uploads/${d.users && d.users.image}`}
+                                src={`https://api.thevocalhub.com/uploads/${
+                                  d.users && d.users.image
+                                }`}
                                 alt=""
                                 className="rounded-circle"
                                 width="80"
@@ -144,6 +184,24 @@ const ListVocals = () => {
                                   {d.songKeys}
                                 </Badge>
                               }
+                            </td>
+                            <td>
+                              <Toggle
+                                id="biscuit-status"
+                                defaultChecked={d.isFeatured}
+                                aria-labelledby="biscuit-label"
+                                onChange={() =>
+                                  handleFeatured(d.productId, d.isFeatured)
+                                }
+                              />
+                            </td>
+                            <td>
+                              <Toggle
+                                id="biscuit-status"
+                                defaultChecked={d.isNew}
+                                aria-labelledby="biscuit-label"
+                                onChange={() => handleNew(d.productId, d.isNew)}
+                              />
                             </td>
                             {d.SongSpecializationId === 1 ? (
                               <td>
