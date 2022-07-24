@@ -3,6 +3,7 @@ import PageTitle from "../../layouts/PageTitle";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import swal from "sweetalert";
+import { format } from "date-fns";
 
 const ListKeys = () => {
   const [keys, setkeys] = useState([]);
@@ -82,8 +83,20 @@ const ListKeys = () => {
                         ) : (
                           <Fragment key={i}>
                             <td>{<Fragment>{d.keyName}</Fragment>}</td>
-                            <td>{<Fragment>{d.createdAt}</Fragment>}</td>
-                            <td>{<Fragment>{d.updatedAt}</Fragment>}</td>
+                            <td>
+                              {
+                                <Fragment>
+                                  {format(new Date(d.createdAt), "''eeee")}
+                                </Fragment>
+                              }
+                            </td>
+                            <td>
+                              {
+                                <Fragment>
+                                  {format(new Date(d.updatedAt), "''eeee")}
+                                </Fragment>
+                              }
+                            </td>
 
                             <td>
                               {

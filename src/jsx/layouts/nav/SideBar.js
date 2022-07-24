@@ -66,6 +66,7 @@ const SideBar = () => {
     ContactUs = ["contact-us"],
     Orders = ["orders"],
     Coupons = ["coupons","add-coupon"];
+    PaymentRequest = ["paymentRequest"];
 
   return (
     <div
@@ -293,6 +294,12 @@ const SideBar = () => {
             <Link className="" to="/artist-request">
               <i className="flaticon-087-stop"></i>
               <span className="nav-text">Artist Requests</span>
+            </Link>
+          </li>
+          <li className={`${PaymentRequest.includes(path) ? "mm-active" : ""}`}>
+            <Link className="" to="/paymentRequest">
+              <i className="flaticon-087-stop"></i>
+              <span className="nav-text">Payment Requests</span>
             </Link>
           </li>
           <li

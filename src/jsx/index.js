@@ -45,6 +45,7 @@ import ListOrders from "./components/Orders/ListOrders";
 import Profile from "./components/Profile/Profile";
 import ListCoupons from "./components/Coupons/ListCoupons";
 import AddCoupon from "./components/Coupons/AddCoupon";
+import ListPaymentRequest from "./components/PaymentRequest/ListPaymentRequest";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -94,6 +95,10 @@ const Markup = () => {
     { url: "coupons", component: ListCoupons },
     { url: "add-coupon", component: AddCoupon },
 
+    /// Payment Requests
+    { url: "paymentRequest", component: ListPaymentRequest },
+
+    /// Profile
     { url: "page-login", component: Login },
     { url: "profile", component: Profile },
   ];

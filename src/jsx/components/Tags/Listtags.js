@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "react-toggle/style.css";
 import swal from "sweetalert";
+import { format, formatDistance, formatRelative, subDays } from "date-fns";
 
 const ListTags = () => {
   const [tags, setTags] = useState([]);
@@ -84,8 +85,20 @@ const ListTags = () => {
                         ) : (
                           <Fragment key={i}>
                             <td>{<Fragment>{d.tagName}</Fragment>}</td>
-                            <td>{<Fragment>{d.createdAt}</Fragment>}</td>
-                            <td>{<Fragment>{d.updatedAt}</Fragment>}</td>
+                            <td>
+                              {
+                                <Fragment>
+                                  {format(new Date(d.createdAt), "''eeee")}
+                                </Fragment>
+                              }
+                            </td>
+                            <td>
+                              {
+                                <Fragment>
+                                  {format(new Date(d.updatedAt), "''eeee")}
+                                </Fragment>
+                              }
+                            </td>
 
                             <td>
                               {

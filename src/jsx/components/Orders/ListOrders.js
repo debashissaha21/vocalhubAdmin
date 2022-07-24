@@ -5,6 +5,7 @@ import axios from "axios";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import swal from "sweetalert";
+import { format } from "date-fns";
 
 const ListOrders = () => {
   const [orders, setorders] = useState([]);
@@ -56,7 +57,7 @@ const ListOrders = () => {
       })
       .catch((err) => {});
   };
-  
+
   return (
     <Fragment>
       <PageTitle activeMenu="orders" motherMenu="orders" />
@@ -93,8 +94,20 @@ const ListOrders = () => {
                         <td>{<Fragment>£{d.totalPrice}</Fragment>}</td>
                         <td>{<Fragment>£{d.payableAmount}</Fragment>}</td>
                         <td>{<Fragment>{d.couponName}</Fragment>}</td>
-                        <td>{<Fragment>{d.createdAt.split("T")}</Fragment>}</td>
-                        <td>{<Fragment>{d.updatedAt.split("T")}</Fragment>}</td>
+                        <td>
+                          {
+                            <Fragment>
+                              {format(new Date(d.createdAt), "''eeee")}
+                            </Fragment>
+                          }
+                        </td>
+                        <td>
+                          {
+                            <Fragment>
+                              {format(new Date(d.updatedAt), "''eeee")}
+                            </Fragment>
+                          }
+                        </td>
 
                         <td>
                           {

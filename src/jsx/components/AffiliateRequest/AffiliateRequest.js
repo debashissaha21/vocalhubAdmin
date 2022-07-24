@@ -5,6 +5,7 @@ import axios from "axios";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import swal from "sweetalert";
+import { format, formatDistance, formatRelative, subDays } from "date-fns";
 
 const AffiliateRequest = () => {
   const [users, setUsers] = useState([]);
@@ -104,8 +105,20 @@ const AffiliateRequest = () => {
                           <td>{<Fragment>{d.accountEmail}</Fragment>}</td>
                           <td>{<Fragment>{d.websiteURL}</Fragment>}</td>
                           <td>{<Fragment>{d.promoteUs}</Fragment>}</td>
-                          <td>{<Fragment>{d.createdAt}</Fragment>}</td>
-                          <td>{<Fragment>{d.updatedAt}</Fragment>}</td>
+                          <td>
+                            {
+                              <Fragment>
+                                {format(new Date(d.createdAt), "''eeee")}
+                              </Fragment>
+                            }
+                          </td>
+                          <td>
+                            {
+                              <Fragment>
+                                {format(new Date(d.updatedAt), "''eeee")}
+                              </Fragment>
+                            }
+                          </td>
                           <td>
                             <Toggle
                               id="biscuit-status"

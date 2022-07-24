@@ -5,6 +5,7 @@ import axios from "axios";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import swal from "sweetalert";
+import { format, formatDistance, formatRelative, subDays } from "date-fns";
 
 const ListArtists = () => {
   const [users, setUsers] = useState([]);
@@ -152,8 +153,20 @@ const ListArtists = () => {
                                   </Fragment>
                                 }
                               </td>
-                              <td>{<Fragment>{d.createdAt}</Fragment>}</td>
-                              <td>{<Fragment>{d.updatedAt}</Fragment>}</td>
+                              <td>
+                                {
+                                  <Fragment>
+                                    {format(new Date(d.createdAt), "''eeee")}
+                                  </Fragment>
+                                }
+                              </td>
+                              <td>
+                                {
+                                  <Fragment>
+                                    {format(new Date(d.updatedAt), "''eeee")}
+                                  </Fragment>
+                                }
+                              </td>
                               <td>
                                 <Toggle
                                   id="biscuit-status"
