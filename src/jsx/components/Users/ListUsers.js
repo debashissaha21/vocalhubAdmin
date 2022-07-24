@@ -89,7 +89,7 @@ const ListUsers = () => {
     console.log(groupId);
     await axios
       .put(`https://api.thevocalhub.com/api/v1/users/${id}`, {
-        groupId: groupId == 3 ? 2 : 3,
+        groupId: groupId == null ? 2 : null,
       })
       .then((res) => {
         if (res.data.status === 200) {
