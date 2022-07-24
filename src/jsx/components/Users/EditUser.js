@@ -21,7 +21,7 @@ const EditUser = () => {
 
   const getUser = async () => {
     await axios
-      .get(`http://api.thevocalhub.com/api/v1/users/${id}`)
+      .get(`https://api.thevocalhub.com/api/v1/users/${id}`)
       .then((res) => {
         setUser(res.data.user);
         setUserName(res.data.user.userName);

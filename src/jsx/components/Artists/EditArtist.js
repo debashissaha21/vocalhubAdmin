@@ -28,7 +28,7 @@ const EditArtist = () => {
   },[]);
   const getArtists = async () => {
     await axios
-      .get(`http://api.thevocalhub.com/api/v1/users/${id}`)
+      .get(`https://api.thevocalhub.com/api/v1/users/${id}`)
       .then((res) => {
         console.log(res.data);
         setUserName(res.data.user.userName);
