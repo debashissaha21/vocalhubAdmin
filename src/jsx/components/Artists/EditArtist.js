@@ -25,24 +25,24 @@ const EditArtist = () => {
   console.log(userName);
   useEffect(() => {
     getArtists();
-  },[]);
+  }, []);
   const getArtists = async () => {
     await axios
       .get(`https://api.thevocalhub.com/api/v1/users/${id}`)
       .then((res) => {
         console.log(res.data);
-        setUserName(res.data.user.userName);
-        setUserEmail(res.data.user.regemailId);
-        setUserPassword(res.data.user.regPassword);
-        setGender(res.data.user.gender);
-        setRating(res.data.user.rating);
-        setCountry(res.data.user.country);
-        setAchivement(res.data.user.achievement);
-        setSpecialist(res.data.user.specialist);
-        setMusicNotes(res.data.user.musicNote);
-        setHireMessage(res.data.user.hireMsg);
-        setHirePrice(res.data.user.hirePrice);
-        setAbout(res.data.user.about);
+        setUserName(res.data.user[0].userName);
+        setUserEmail(res.data.user[0].regemailId);
+        setUserPassword(res.data.user[0].regPassword);
+        setGender(res.data.user[0].gender);
+        setRating(res.data.user[0].rating);
+        setCountry(res.data.user[0].country);
+        setAchivement(res.data.user[0].achievement);
+        setSpecialist(res.data.user[0].specialist);
+        setMusicNotes(res.data.user[0].musicNote);
+        setHireMessage(res.data.user[0].hireMsg);
+        setHirePrice(res.data.user[0].hirePrice);
+        setAbout(res.data.user[0].about);
       })
       .catch((err) => {});
   };

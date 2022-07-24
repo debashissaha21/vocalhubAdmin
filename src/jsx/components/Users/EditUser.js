@@ -24,9 +24,9 @@ const EditUser = () => {
       .get(`https://api.thevocalhub.com/api/v1/users/${id}`)
       .then((res) => {
         setUser(res.data.user);
-        setUserName(res.data.user.userName);
-        setUserEmail(res.data.user.regemailId);
-        setUserPassword(res.data.user.regPassword);
+        setUserName(res.data.user[0].userName);
+        setUserEmail(res.data.user[0].regemailId);
+        setUserPassword(res.data.user[0].regPassword);
       })
       .catch((err) => {});
   };
