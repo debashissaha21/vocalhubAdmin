@@ -43,6 +43,7 @@ const AddArtist = () => {
       formData.append("hirePrice", hirePrice);
       formData.append("about", about);
       formData.append("groupId", 2);
+      formData.append("referId", "");
     } else {
       userData = {
         userName,
@@ -59,6 +60,7 @@ const AddArtist = () => {
         hirePrice: hirePrice,
         about: about,
         groupId: 2,
+        referId: "",
       };
     }
     if (isLoading) {

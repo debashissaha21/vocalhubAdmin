@@ -20,7 +20,7 @@ const AddUsers = () => {
       regemailId,
       regPassword,
       confirmPassword,
-      groupId: 3
+      referId: "",
     };
     if(isLoading){
         swal("Please wait", "Your request is being processed", "info");
